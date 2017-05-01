@@ -1,0 +1,33 @@
+
+# Direct mapped cache #
+
+Ordinary cache structure:
+
+0   tag | data
+1   tag | data
+2   tag | data
+3   ...
+
+For this project, we don't need to keep track of data at all, so my cache should just be an array of tags.
+
+Break the address into three parts (the number of bits in each part will differ):
+
+    tag | index | offset
+    22  | 5     | 5      (bits)
+
+For this project, the offset will always be 5 bits (because the cache line is always 32 bytes).
+
+(The actual value of the offset doesn't matter for this project -- we just need to know how long it is to get the index portion of the address.)
+
+Cache size: 1 KB means 2^10 (1024)
+
+Number of entries in the cache: cache size / cache line
+
+For example, 1024 / 32 = 32 entries
+
+If the cache size is 2^10 (1024), the index is 5 bits (as in the example above), because this allows us to access all 2^5 = 32 entries in the cache. Therefore, 4 KB (2^12) would need an index with 7 bits, and so on.
+
+The tag is however many bits are left over once the index bit count is determined.
+
+To check if data is in the cache, compare the tag of the address with the tag in the cache at the index. If the tag is the same, the data is cached (cache hit).
+
